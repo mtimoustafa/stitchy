@@ -38,6 +38,7 @@
     link: '',
     steps: [],
     rowCount: 0,
+    currentStep: 0,
   }
   addStep(newProject)
 
