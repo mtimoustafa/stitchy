@@ -9,7 +9,7 @@
   </button>
 </div>
 
-<ul class="text-sky-50">
+<ul class="text-sky-50 space-y-8">
   {#each $projects as project}
     <li>
       <button

@@ -1,9 +1,35 @@
 <div class="flex justify-between">
-  <h2 class="text-xl sm:text-2xl font-bold text-coral">{project.name}</h2>
+  <div class="inline-block space-x-6">
+    <button
+      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+      on:click={() => dispatch('back')}
+    >
+      Back
+    </button>
+
+    <h2 class="text-xl sm:text-2xl font-bold text-coral inline-block">{project.name}</h2>
+
+    <button
+      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+      on:click={() => dispatch('editProject')}
+    >
+      Edit
+    </button>
+
+    {#if project.link}
+      <a
+        class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+        href="{project.link}"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Link
+      </a>
+    {/if}
+  </div>
 
   <button
     class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
-    on:click={() => dispatch('deleteProject', { projectId: project.id })}
     on:click={() => deleteProject(project.id)}
   >
     Delete
@@ -11,7 +37,7 @@
 </div>
 
 <h3 class="text-md sm:text-lg font-bold text-coral">Steps</h3>
-<ul class="text-sky-50">
+<ol class="list-decimal text-sky-50 ml-4">
   {#each project.steps as step, index}
     <li>
       {#if project.currentStep > index}
@@ -20,7 +46,7 @@
       {step.description}
     </li>
   {/each}
-</ul>
+</ol>
 
 <h3 class="text-md sm:text-lg font-bold text-coral">Current Step</h3>
 
