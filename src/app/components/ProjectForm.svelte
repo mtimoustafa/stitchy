@@ -8,26 +8,45 @@
 
   <input
     bind:value={project.name}
+    on:input={() => { isDirty = true }}
+    class="block"
+  />
+
+  <input
+    bind:value={project.link}
+    on:input={() => { isDirty = true }}
     class="block"
   />
 
   {#each project.steps as newStep}
-    <input
-      bind:value={newStep.description}
-      class="block"
-    />
+    <div>
+      <input
+        bind:value={newStep.description}
+        on:input={() => { isDirty = true }}
+      />
+
+      <button
+        class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+        on:click={() => { removeStep(newStep.id) }}
+      >
+        Remove Step
+      </button>
+    </div>
   {/each}
 
-  <button
-    class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
-    on:click={() => { addStep(); project = project; }}
-  >
-    Add Step
-  </button>
+  <div>
+    <button
+      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+      on:click={() => { addStep() }}
+    >
+      Add Step
+    </button>
+  </div>
 
   <button
-    class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+    class="px-6 py-3 bg-sky-800 disabled:bg-slate-700 text-sky-50 rounded-lg"
     on:click={submitProject}
+    disabled={!isDirty || !isValidInput()}
   >
     {mode === 'new' ? 'Create' : 'Update'}
   </button>
@@ -41,28 +60,40 @@
   export let mode
 
   const dispatch = createEventDispatcher()
-
+  let isDirty = false
   let project
+
   if (mode === 'new') {
     project = {
       id: uuid(),
       name: 'New Project',
       link: '',
-      steps: [],
-      rowCount: 0,
+      steps: [newStep()],
       currentStep: 0,
     }
-    addStep()
   } else {
     project = $currentProject
   }
-  console.log(project)
+
+  function newStep() {
+    return {
+      id: uuid(),
+        description: '',
+    }
+  }
 
   function addStep() {
-    project.steps = [...project.steps, {
-      id: uuid(),
-      description: '',
-    }]
+    project.steps = [...project.steps, newStep()]
+    isDirty = true
+  }
+
+  function removeStep(stepId) {
+    if (project.steps.length === 1) {
+      project.steps[0].description = ''
+    } else {
+      project.steps = project.steps.filter(p => p.id !== stepId)
+    }
+    isDirty = true
   }
 
   function submitProject() {
@@ -71,11 +102,14 @@
       if (mode === 'new') {
         $projects = [...$projects, project]
       } else {
-        $projects.forEach(p => {
-          if (p.id === project.id) {
-            p = project
-          }
-        })
+        if (window.confirm(`Updating ${project.name} will reset your step tracking. Update still?`)) {
+          project.currentStep = 0
+          $projects.forEach(p => {
+            if (p.id === project.id) {
+              p = project
+            }
+          })
+        }
       }
 
       localStorage.setItem('projects', JSON.stringify($projects))
@@ -88,8 +122,7 @@
     }
   }
 
-  function isValidInput() {
-    console.log(project.name.length > 0, project.steps.every(s => s.description.length > 0))
+  $: isValidInput = function() {
     return project.name.length > 0
       && project.steps.every(s => s.description.length > 0)
   }
