@@ -1,61 +1,59 @@
 <div class="space-y-8">
-  <button
-    class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+  <Button
     on:click={() => dispatch('back')}
   >
     Back
-  </button>
+  </Button>
 
   <input
     bind:value={project.name}
     on:input={() => { isDirty = true }}
-    class="block"
+    class="block text-black"
   />
 
   <input
     bind:value={project.link}
     on:input={() => { isDirty = true }}
-    class="block"
+    class="block text-black"
   />
 
   {#each project.steps as newStep}
     <div>
       <input
+        class="text-black"
         bind:value={newStep.description}
         on:input={() => { isDirty = true }}
       />
 
-      <button
-        class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+      <Button
         on:click={() => { removeStep(newStep.id) }}
       >
         Remove Step
-      </button>
+      </Button>
     </div>
   {/each}
 
   <div>
-    <button
-      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+    <Button
       on:click={() => { addStep() }}
     >
       Add Step
-    </button>
+    </Button>
   </div>
 
-  <button
-    class="px-6 py-3 bg-sky-800 disabled:bg-slate-700 text-sky-50 rounded-lg"
+  <Button
     on:click={submitProject}
     disabled={!isDirty || !isValidInput()}
   >
     {mode === 'new' ? 'Create' : 'Update'}
-  </button>
+  </Button>
 </div>
 
 <script>
   import { v4 as uuid } from "uuid"
   import { createEventDispatcher } from 'svelte'
   import { currentProject, projects } from '../store/stores.js'
+  import Button from './shared/Button.svelte'
 
   export let mode
 

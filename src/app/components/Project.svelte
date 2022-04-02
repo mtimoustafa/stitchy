@@ -1,24 +1,22 @@
 <div class="flex justify-between">
   <div class="inline-block space-x-6">
-    <button
-      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+    <Button
       on:click={() => dispatch('back')}
     >
       Back
-    </button>
+    </Button>
 
     <h2 class="text-xl sm:text-2xl font-bold inline-block">{project.name}</h2>
 
-    <button
-      class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+    <Button
       on:click={() => dispatch('editProject')}
     >
       Edit
-    </button>
+    </Button>
 
     {#if project.link}
       <a
-        class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+        class="px-6 py-3 rounded-lg bg-s-red"
         href="{project.link}"
         target="_blank"
         rel="noreferrer noopener"
@@ -28,12 +26,11 @@
     {/if}
   </div>
 
-  <button
-    class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+  <Button
     on:click={() => deleteProject(project.id)}
   >
     Delete
-  </button>
+  </Button>
 </div>
 
 <h3 class="text-md sm:text-lg font-bold">Steps</h3>
@@ -56,22 +53,21 @@
   <p class="text-sky-50">{project.steps[project.currentStep].description}</p>
 {/if}
 
-<button
-  class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+<Button
   on:click={previousStep}
 >
   Previous
-</button>
-<button
-  class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+</Button>
+<Button
   on:click={nextStep}
 >
   Done
-</button>
+</Button>
 
 <script>
   import { createEventDispatcher } from 'svelte'
   import { projects } from '../store/stores.js'
+  import Button from './shared/Button.svelte'
 
   export let project
   
