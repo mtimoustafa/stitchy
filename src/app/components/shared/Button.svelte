@@ -1,7 +1,7 @@
 <button
     class="
-      px-6
-      py-3
+      px-5
+      py-2.5
       rounded-lg
       bg-s-red
       disabled:bg-slate-700

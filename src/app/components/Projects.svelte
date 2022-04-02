@@ -1,10 +1,11 @@
-<div class="flex justify-between items-center">
-  <h2 class="text-2xl font-bold">Projects</h2>
+<div class="flex justify-between items-center mb-10">
+  <h2 class="text-3xl font-bold">Projects</h2>
 
   <Button
     on:click={() => dispatch('newProject')}
+    alt="New Project"
   >
-    + New Project
+    +
   </Button>
 </div>
 
