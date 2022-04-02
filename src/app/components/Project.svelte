@@ -7,7 +7,7 @@
       Back
     </button>
 
-    <h2 class="text-xl sm:text-2xl font-bold text-coral inline-block">{project.name}</h2>
+    <h2 class="text-xl sm:text-2xl font-bold inline-block">{project.name}</h2>
 
     <button
       class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
@@ -36,7 +36,7 @@
   </button>
 </div>
 
-<h3 class="text-md sm:text-lg font-bold text-coral">Steps</h3>
+<h3 class="text-md sm:text-lg font-bold">Steps</h3>
 <ol class="list-decimal text-sky-50 ml-4">
   {#each project.steps as step, index}
     <li>
@@ -48,7 +48,7 @@
   {/each}
 </ol>
 
-<h3 class="text-md sm:text-lg font-bold text-coral">Current Step</h3>
+<h3 class="text-md sm:text-lg font-bold">Current Step</h3>
 
 {#if project.currentStep >= project.steps.length}
   <p class="text-sky-50">Done!</p>

@@ -1,8 +1,8 @@
-<div class="flex justify-between">
-  <h2 class="text-xl sm:text-2xl font-bold text-coral">Projects</h2>
+<div class="flex justify-between items-center">
+  <h2 class="text-2xl font-bold">Projects</h2>
 
   <button
-    class="px-6 py-3 bg-sky-800 text-sky-50 rounded-lg"
+    class="px-6 py-3 bg-s-red rounded-lg"
     on:click={() => dispatch('newProject')}
   >
     + New Project

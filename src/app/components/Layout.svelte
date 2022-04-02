@@ -11,7 +11,7 @@
     text-white
   "
 >
-  <div class="relative">
+  <div class="relative mb-14">
     <img src="{logo}" alt="Stitchy Logo: a yarn ball" class="w-20" />
     <h1 class="absolute bottom-0 left-10 text-5xl font-bold">Stitchy</h1>
   </div>
