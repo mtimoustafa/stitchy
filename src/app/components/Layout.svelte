@@ -8,9 +8,13 @@
     md:py-24
     lg:py-36
     space-y-8
+    text-white
   "
 >
-  <h1 class="text-3xl sm:text-4xl font-bold text-coral">Stitchy</h1>
+  <div class="relative">
+    <img src="{logo}" alt="Stitchy Logo: a yarn ball" class="w-20" />
+    <h1 class="absolute bottom-0 left-10 text-5xl font-bold">Stitchy</h1>
+  </div>
 
   {#if viewState === 'projects'}
     <Projects
@@ -43,6 +47,7 @@
   import ProjectForm from './ProjectForm.svelte'
   import Project from './Project.svelte'
   import { currentProject, projects } from '../store/stores.js'
+  import logo from '../assets/yarn-ball.svg'
 
   let viewState = 'projects'
 
