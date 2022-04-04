@@ -1,18 +1,14 @@
 <div class="flex justify-between">
   <div class="inline-block space-x-6">
-    <Button
-      on:click={() => dispatch('back')}
-    >
+    <RouterLink to="/">
       Back
-    </Button>
+    </RouterLink>
 
     <h2 class="text-xl sm:text-2xl font-bold inline-block">{project.name}</h2>
 
-    <Button
-      on:click={() => dispatch('editProject')}
-    >
+    <RouterLink to="/projects/{projectId}/edit">
       Edit
-    </Button>
+    </RouterLink>
 
     {#if project.link}
       <a
@@ -26,9 +22,7 @@
     {/if}
   </div>
 
-  <Button
-    on:click={() => deleteProject(project.id)}
-  >
+  <Button on:click={() => deleteProject(project.id)}>
     Delete
   </Button>
 </div>
@@ -65,13 +59,19 @@
 </Button>
 
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { navigate } from 'svelte-navigator'
   import { projects } from '../store/stores.js'
   import Button from './shared/Button.svelte'
+  import RouterLink from './shared/RouterLink.svelte'
 
-  export let project
-  
-  const dispatch = createEventDispatcher()
+  export let projectId
+  let project
+
+  project = $projects.find(p => p.id === projectId)
+  if (project === undefined) {
+    project = { steps: [], currentStep: 0 } // For clean teardown
+    navigate('/')
+  }
 
   function previousStep() {
     $projects.map(p => {
@@ -97,7 +97,7 @@
     if (window.confirm(`Are you sure you want to delete ${project.name}?`)) {
       $projects = $projects.filter(p => p.id !== id)
       localStorage.setItem('projects', JSON.stringify($projects))
-      dispatch('back')
+      navigate('/')
     }
   }
 </script>

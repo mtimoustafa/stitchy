@@ -18,6 +18,7 @@
     "vite": "^2.8.0"
   },
   "dependencies": {
+    "svelte-navigator": "^3.1.5",
     "uuidv4": "^6.2.13"
   }
 }

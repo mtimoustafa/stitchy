@@ -1,9 +1,7 @@
 <div class="space-y-8">
-  <Button
-    on:click={() => dispatch('back')}
-  >
+  <RouterLink to="{ mode === 'new' ? '/' : `/projects/${project.id}` }">
     Back
-  </Button>
+  </RouterLink>
 
   <input
     bind:value={project.name}
@@ -52,12 +50,14 @@
 <script>
   import { v4 as uuid } from "uuid"
   import { createEventDispatcher } from 'svelte'
-  import { currentProject, projects } from '../store/stores.js'
+  import { navigate } from 'svelte-navigator'
+  import { projects } from '../store/stores.js'
   import Button from './shared/Button.svelte'
+  import RouterLink from './shared/RouterLink.svelte'
 
   export let mode
+  export let projectId = undefined
 
-  const dispatch = createEventDispatcher()
   let isDirty = false
   let project
 
@@ -70,13 +70,17 @@
       currentStep: 0,
     }
   } else {
-    project = $currentProject
+    project = $projects.find(p => p.id === projectId)
+
+    if (project === undefined) {
+      navigate('/')
+    }
   }
 
   function newStep() {
     return {
       id: uuid(),
-        description: '',
+      description: '',
     }
   }
 
@@ -112,11 +116,7 @@
 
       localStorage.setItem('projects', JSON.stringify($projects))
 
-      if (mode === 'new') {
-        dispatch('createProject')
-      } else {
-        dispatch('updateProject', { project })
-      }
+      navigate(`/projects/${project.id}`)
     }
   }
 

@@ -1,4 +1,4 @@
-<button
+<Link
   class="
     px-5
     py-2.5
@@ -6,14 +6,15 @@
     bg-s-red
     disabled:bg-slate-700
   "
-  on:click
-  {disabled}
+  {to}
   {alt}
 >
   <slot></slot>
-</button>
+</Link>
 
 <script>
-  export let disabled = false
+  import { Link } from 'svelte-navigator'
+
+  export let to
   export let alt = undefined
 </script>
