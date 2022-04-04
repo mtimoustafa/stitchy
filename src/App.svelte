@@ -6,12 +6,14 @@
     text-white
   "
 >
-  <div class="relative mb-14">
-    <h1 class="absolute bottom-0 left-10 text-6xl font-bold s-text-border">Stitchy</h1>
-    <img src="{logo}" aria-hidden="true" alt="" class="w-20" />
-  </div>
-
   <Router>
+    <div class="relative mb-14">
+      <Link to="/" aria-label="Stitchy: Home">
+        <h1 class="absolute bottom-0 left-10 text-6xl font-bold s-text-border">Stitchy</h1>
+        <img src="{logo}" aria-hidden="true" alt="" class="w-20" />
+      </Link>
+    </div>
+
     <Route path="/">
       <Projects />
     </Route>
@@ -34,7 +36,7 @@
 </main>
 
 <script>
-  import { Router, Route } from 'svelte-navigator'
+  import { Link, Router, Route } from 'svelte-navigator'
   import Projects from './app/components/Projects.svelte'
   import ProjectForm from './app/components/ProjectForm.svelte'
   import Project from './app/components/Project.svelte'

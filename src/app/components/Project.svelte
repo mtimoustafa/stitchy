@@ -1,67 +1,75 @@
-<div class="flex justify-between">
-  <div class="inline-block space-x-6">
+<div class="mb-10">
+  <div class="flex items-center mb-6 space-x-4">
     <RouterLink to="/">
-      Back
+      &#8592;
     </RouterLink>
 
-    <h2 class="text-xl sm:text-2xl font-bold inline-block">{project.name}</h2>
+    <h2 class="text-3xl font-bold inline-block">{project.name}</h2>
+  </div>
 
+  <div class="flex justify-between">
     <RouterLink to="/projects/{projectId}/edit">
       Edit
     </RouterLink>
 
     {#if project.link}
-      <a
-        class="px-6 py-3 rounded-lg bg-s-red"
-        href="{project.link}"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        Link
-      </a>
+      <Link href="{project.link}">Link</Link>
     {/if}
-  </div>
 
-  <Button on:click={() => deleteProject(project.id)}>
-    Delete
-  </Button>
+    <Button on:click={() => deleteProject(project.id)}>
+      Delete
+    </Button>
+  </div>
 </div>
 
-<h3 class="text-md sm:text-lg font-bold">Steps</h3>
-<ol class="list-decimal text-sky-50 ml-4">
-  {#each project.steps as step, index}
-    <li>
-      {#if project.currentStep > index}
-        ✅
+<div class="space-y-6 mb-10">
+  <div class="text-2xl">
+    <p>
+      {#if project.currentStep >= project.steps.length}
+        <span class="font-bold">Done!</span>
+      {:else}
+        <span class="font-bold">Step {project.currentStep + 1}:</span>
+        {project.steps[project.currentStep].description}
       {/if}
-      {step.description}
-    </li>
-  {/each}
-</ol>
+    </p>
+  </div>
 
-<h3 class="text-md sm:text-lg font-bold">Current Step</h3>
+  <div class="flex justify-between">
+    <Button
+      on:click={previousStep}
+      disabled="{project.currentStep === 0}"
+    >
+      Previous
+    </Button>
+    <Button
+      on:click={nextStep}
+      disabled="{project.currentStep === project.steps.length}"
+    >
+      Next
+    </Button>
+  </div>
+</div>
 
-{#if project.currentStep >= project.steps.length}
-  <p class="text-sky-50">Done!</p>
-{:else}
-  <p class="text-sky-50">{project.steps[project.currentStep].description}</p>
-{/if}
+<div class="space-y-6">
+  <h3 class="text-xl font-bold">All Steps</h3>
 
-<Button
-  on:click={previousStep}
->
-  Previous
-</Button>
-<Button
-  on:click={nextStep}
->
-  Done
-</Button>
+  <ol class="list-decimal ml-4">
+    {#each project.steps as step, index}
+      <li>
+        {#if project.currentStep > index}
+          ✅
+        {/if}
+        {step.description}
+      </li>
+    {/each}
+  </ol>
+</div>
 
 <script>
   import { navigate } from 'svelte-navigator'
   import { projects } from '../store/stores.js'
   import Button from './shared/Button.svelte'
+  import Link from './shared/Link.svelte'
   import RouterLink from './shared/RouterLink.svelte'
 
   export let projectId
