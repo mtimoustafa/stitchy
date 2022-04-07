@@ -32,14 +32,21 @@
         projectId="{params.id}"
       />
     </Route>
+
+    <Route path="debug">
+      <Debug />
+    </Route>
   </Router>
 </main>
 
 <script>
   import { Link, Router, Route } from 'svelte-navigator'
+
   import Projects from './app/components/Projects.svelte'
   import ProjectForm from './app/components/ProjectForm.svelte'
   import Project from './app/components/Project.svelte'
+  import Debug from './app/components/Debug.svelte'
+
   import logo from './app/assets/yarn-ball.svg'
 
   // <body> style must be added dynamically to index.html
