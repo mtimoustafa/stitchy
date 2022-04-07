@@ -1,58 +1,66 @@
 <div class="space-y-8">
-  <RouterLink to="{ mode === 'new' ? '/' : `/projects/${project.id}` }">
-    Back
-  </RouterLink>
+  <div class="flex items-center mb-6 space-x-4">
+    <RouterLink to="{ mode === 'new' ? '/' : `/projects/${project.id}` }">
+      &#8592;
+    </RouterLink>
 
-  <input
-    bind:value={project.name}
-    on:input={() => { isDirty = true }}
-    class="block text-black"
-  />
+    <h2 class="text-3xl font-bold">Add Project</h2>
+  </div>
 
-  <input
-    bind:value={project.link}
-    on:input={() => { isDirty = true }}
-    class="block text-black"
-  />
+  <div>
+    <Input
+      bind:value={project.name}
+      placeholder="Name"
+      on:input={() => { isDirty = true }}
+    />
+  </div>
 
-  {#each project.steps as newStep}
-    <div>
-      <input
-        class="text-black"
+
+  <div>
+    <Input
+      bind:value={project.link}
+      placeholder="Link"
+      on:input={() => { isDirty = true }}
+    />
+  </div>
+
+  {#each project.steps as newStep, index}
+    <div class="space-x-4">
+      <Input
         bind:value={newStep.description}
+        placeholder="Step {index + 1}"
         on:input={() => { isDirty = true }}
       />
 
-      <Button
-        on:click={() => { removeStep(newStep.id) }}
-      >
-        Remove Step
+      <Button on:click={() => { removeStep(newStep.id) }}>
+        -
       </Button>
     </div>
   {/each}
 
-  <div>
+  <div class="flex justify-between">
     <Button
       on:click={() => { addStep() }}
     >
       Add Step
     </Button>
+
+    <Button
+      on:click={submitProject}
+      disabled={!isDirty || !isValidInput()}
+    >
+      {mode === 'new' ? 'Create' : 'Update'}
+    </Button>
   </div>
 
-  <Button
-    on:click={submitProject}
-    disabled={!isDirty || !isValidInput()}
-  >
-    {mode === 'new' ? 'Create' : 'Update'}
-  </Button>
 </div>
 
 <script>
   import { v4 as uuid } from "uuid"
-  import { createEventDispatcher } from 'svelte'
   import { navigate } from 'svelte-navigator'
   import { projects } from '../store/stores.js'
   import Button from './shared/Button.svelte'
+  import Input from './shared/Input.svelte'
   import RouterLink from './shared/RouterLink.svelte'
 
   export let mode
@@ -64,7 +72,7 @@
   if (mode === 'new') {
     project = {
       id: uuid(),
-      name: 'New Project',
+      name: '',
       link: '',
       steps: [newStep()],
       currentStep: 0,

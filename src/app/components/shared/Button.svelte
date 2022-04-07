@@ -4,7 +4,7 @@
     py-2.5
     rounded-lg
     bg-s-red
-    disabled:bg-slate-700
+    disabled:bg-slate-500
   "
   on:click
   {disabled}
