@@ -33,7 +33,7 @@
       />
     </Route>
 
-    <Route path="secret">
+    <Route path="debug">
       <Debug />
     </Route>
   </Router>
