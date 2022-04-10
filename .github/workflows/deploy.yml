@@ -24,6 +24,9 @@ jobs:
         run: |
           git config --global user.name 'Mohamed Moustafa - Automated'
           git config --global user.email 'mti.moustafa@gmail.com'
-          git add . --force dist/*
+          git checkout deploy
+          git pull
+          git add .
+          git add -f dist/*
           git commit -m "Deploy @${{env.GITHUB_REF}}"
           git push
