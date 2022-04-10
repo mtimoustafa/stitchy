@@ -29,5 +29,5 @@ jobs:
           git pull
           git add .
           git add -f dist/*
-          git commit --allow-empty -m "Deploy @${{github.ref}}"
+          git commit --allow-empty -m "Deploy @${{github.sha}}"
           git push
