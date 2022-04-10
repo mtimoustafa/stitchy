@@ -1,0 +1,28 @@
+name: 'Deploy to Heroku'
+on:
+  push:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+
+      - name: Build dist folder
+        run: |
+          yarn
+          yarn build
+
+      - name: Push to deploy branch
+        run: |
+          git config --global user.name 'Mohamed Moustafa - Automated'
+          git config --global user.email 'mti.moustafa@gmail.com'
+          git commit -am "Deploy @${{env.GITHUB_REF}}"
+          git push
