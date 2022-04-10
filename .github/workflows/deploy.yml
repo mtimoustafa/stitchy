@@ -25,7 +25,7 @@ jobs:
           git config --global user.name 'Mohamed Moustafa - Automated'
           git config --global user.email 'mti.moustafa@gmail.com'
           git fetch
-          git checkout -b deploy
+          git checkout deploy
           git pull
           git add .
           git add -f dist/*
