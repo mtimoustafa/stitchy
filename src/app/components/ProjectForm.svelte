@@ -114,11 +114,14 @@
       } else {
         if (window.confirm(`Updating ${project.name} will reset your step tracking. Update still?`)) {
           project.currentStep = 0
+
           $projects.forEach(p => {
             if (p.id === project.id) {
               p = project
             }
           })
+        } else {
+          return
         }
       }
 
